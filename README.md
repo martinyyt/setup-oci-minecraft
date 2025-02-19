@@ -1,4 +1,4 @@
-# Setup OCI Minecraft
+# Setup Minecraft Server on OCI
 
 This project aims to set up a Minecraft server on Oracle Cloud Infrastructure (OCI) using Terraform.
 
