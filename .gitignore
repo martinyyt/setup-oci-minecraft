@@ -132,3 +132,14 @@ dmypy.json
 
 # Editors
 .idea
+
+# Ignore Terraform files
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfplan
+.terraform/
+
+# Ignore SSH keys
+*.pem
+*.pub
