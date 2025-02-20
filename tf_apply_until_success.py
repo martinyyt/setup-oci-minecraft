@@ -12,12 +12,20 @@ logger.addHandler(handler)
 def run_terraform_apply():
     while True:
         try:
-            result = subprocess.run(["terraform", "apply", "-auto-approve"], check=True)
+            result = subprocess.run(
+                ["terraform", "apply", "-auto-approve"],
+                check=True,
+                stderr=subprocess.PIPE,
+                text=True
+            )
             logger.info("Terraform apply succeeded!")
             break
         except subprocess.CalledProcessError as e:
-            logger.info(f"Terraform apply failed with exit code {e.returncode}. Retrying in 60 seconds...")
-            time.sleep(60)
+            if "out of host capacity" in e.stderr.lower():
+                logger.info(f"Terraform apply failed with 'Out of host capacity' error.\n{e.stderr}\nRetrying in 60 seconds...")
+                time.sleep(60)
+                continue
+            raise e
 
 if __name__ == "__main__":
     logger.info("Starting Terraform apply...")
